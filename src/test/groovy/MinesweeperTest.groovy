@@ -61,7 +61,7 @@ class MinesweeperTest extends Specification {
         if (isEmpty(currentCell) && hasAdjacentMine(lines, line, column, numberColumns)) {
             return countAdjacentMines(lines, line, column, numberColumns)
         }
-        currentCell == "*" ? "*" : '0'
+        "*"
     }
 
     private String countAdjacentMines(List<String> lines, int line, int column, int numberColumns) {
