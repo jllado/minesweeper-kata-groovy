@@ -68,6 +68,11 @@ class MinesweeperTest extends Specification {
             generateField(2, 2, [".*", ".."]) == "1*\n11"
     }
 
+    def "should return a field with adjacent mines for each cell"() {
+        expect:
+            generateField(4, 4, ["*...", "....", ".*..", "...."]) == "*100\n2210\n1*10\n1110"
+    }
+
     String generateField(int numberLines, int numberColumns, List<String> lines) {
         def field = ""
         for (int line = 0; line < numberLines; line++) {
