@@ -33,17 +33,17 @@ class MinesweeperTest extends Specification {
             generateField(1, 4, ["**.."]) == "**10"
     }
 
-    def "given one empty cell with a bomb on left and right should return a field with 2 in that cell"() {
+    def "given one empty cell with a mine on left and right should return a field with 2 in that cell"() {
         expect:
             generateField(1, 3, ["*.*"]) == "*2*"
     }
 
-    def "given one empty cell with a bomb on top should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on top should return a field with 1 in that cell"() {
         expect:
             generateField(2, 1, ["*", "."]) == "*\n1"
     }
 
-    def "given one empty cell with a bomb on bottom should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on bottom should return a field with 1 in that cell"() {
         expect:
             generateField(2, 1, [".", "*"]) == "1\n*"
     }
