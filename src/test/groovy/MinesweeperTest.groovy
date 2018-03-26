@@ -38,7 +38,6 @@ class MinesweeperTest extends Specification {
             generateField(1, 3, ["*.*"]) == "*2*"
     }
 
-
     def "given one empty cell with a bomb on top should return a field with 1 in that cell"() {
         expect:
             generateField(2, 1, ["*", "."]) == "*\n1"
@@ -85,10 +84,6 @@ class MinesweeperTest extends Specification {
             return false
         }
         lines[line - 1].charAt(column) == "*"
-    }
-
-    private boolean hasAdjacentMine(List<String> lines, int line, int column, int numberColumns) {
-        countAdjacentMines(lines, line, column, numberColumns) > 0
     }
 
     boolean hasMineOnRight(int column, String line, int numberColumns) {
