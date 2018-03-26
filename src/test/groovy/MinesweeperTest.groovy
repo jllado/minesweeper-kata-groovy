@@ -58,7 +58,7 @@ class MinesweeperTest extends Specification {
 
     private char cell(List<String> lines, int line, int column, int numberColumns) {
         def currentCell = lines[line].charAt(column)
-        if (isEmpty(currentCell) && hasAdjacentMine(lines, line, column, numberColumns)) {
+        if (isEmpty(currentCell)) {
             return countAdjacentMines(lines, line, column, numberColumns)
         }
         "*"
