@@ -1,7 +1,5 @@
 class Minesweeper {
 
-    public static final String MINE = "*"
-
     private int numberLines
     private int numberColumns
     private List<String> lines
@@ -25,15 +23,15 @@ class Minesweeper {
 
     private char cell(int line, int column) {
         def currentCell = cellAt(line, column)
-        if (isMine(currentCell)) {
-            return MINE
+        if (currentCell.isMine()) {
+            return Cell.MINE
         } else {
             return countAdjacentMines(line, column)
         }
     }
 
-    private char cellAt(int line, int column) {
-        lines[line].charAt(column)
+    private Cell cellAt(int line, int column) {
+        new Cell(lines[line].charAt(column))
     }
 
     private String countAdjacentMines(int line, int column) {
@@ -70,11 +68,7 @@ class Minesweeper {
             return false
         }
         def bottom = cellAt(line + 1, column)
-        isMine(bottom)
-    }
-
-    private boolean isMine(char cell) {
-        cell == MINE
+        bottom.isMine()
     }
 
     private boolean hasMineOnLeftBottom(int line, int column) {
@@ -82,7 +76,7 @@ class Minesweeper {
             return false
         }
         def leftBottom = cellAt(line + 1, column - 1)
-        isMine(leftBottom)
+        leftBottom.isMine()
     }
 
     private boolean hasMineOnRightBottom(int line, int column) {
@@ -90,7 +84,7 @@ class Minesweeper {
             return false
         }
         def rightBottom = cellAt(line + 1, column + 1)
-        isMine(rightBottom)
+        rightBottom.isMine()
     }
 
     private boolean hasMineOnTop(int line, int column) {
@@ -98,7 +92,7 @@ class Minesweeper {
             return false
         }
         def top = cellAt(line - 1, column)
-        isMine(top)
+        top.isMine()
     }
 
     private boolean hasMineOnRightTop(int line, int column) {
@@ -106,7 +100,7 @@ class Minesweeper {
             return false
         }
         def rightTop = cellAt(line - 1, column - 1)
-        isMine(rightTop)
+        rightTop.isMine()
     }
 
     private boolean hasMineOnLeftTop(int line, int column) {
@@ -114,7 +108,7 @@ class Minesweeper {
             return false
         }
         def leftTop = cellAt(line - 1, column + 1)
-        isMine(leftTop)
+        leftTop.isMine()
     }
 
     boolean hasMineOnRight(int column, int line) {
@@ -122,15 +116,14 @@ class Minesweeper {
             return false
         }
         def right = cellAt(line, column + 1)
-        isMine(right)
+        right.isMine()
     }
 
     boolean hasMineOnLeft(int column, int line) {
         if (column == 0) {
             return false
         }
-        def left = cellAt(line, column - 1)
-        isMine(left)
+        cellAt(line, column - 1).isMine()
     }
 
     private String newLine(int line) {
