@@ -31,13 +31,20 @@ class Minesweeper {
     }
 
     private Cell cellAt(Position position) {
-        if (position.line < 0 || position.line == numberLines) {
-            return null
-        }
-        if (position.column < 0 || position.column == numberColumns) {
+        if (!isValid(position)) {
             return null
         }
         new Cell(lines[position.line].charAt(position.column))
+    }
+
+    private boolean isValid(Position position) {
+        if (position.line < 0 || position.line == numberLines) {
+            return false
+        }
+        if (position.column < 0 || position.column == numberColumns) {
+            return false
+        }
+        true
     }
 
     private String countAdjacentMines(int line, int column) {
