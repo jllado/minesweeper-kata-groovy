@@ -41,64 +41,18 @@ class Minesweeper {
     }
 
     private String countAdjacentMines(int line, int column) {
-        def adjacentMines = 0
-        if (hasMineOnLeft(column, line)) {
-            adjacentMines++
-        }
-        if (hasMineOnRight(column, line)) {
-            adjacentMines++
-        }
-        if (hasMineOnTop(line, column)) {
-            adjacentMines++
-        }
-        if (hasMineOnLeftTop(line, column)) {
-            adjacentMines++
-        }
-        if (hasMineOnRightTop(line, column)) {
-            adjacentMines++
-        }
-        if (hasMineOnBottom(line, column)) {
-            adjacentMines++
-        }
-        if (hasMineOnLeftBottom(line, column)) {
-            adjacentMines++
-        }
-        if (hasMineOnRightBottom(line, column)) {
-            adjacentMines++
-        }
-        adjacentMines.toString()
+        adjacentPositions(new Position(line, column)).collect {cellAt(it)}.findAll {it?.isMine()}.size().toString()
     }
 
-    private boolean hasMineOnBottom(int line, int column) {
-        cellAt(new Position(line + 1, column))?.isMine()
-    }
-
-    private boolean hasMineOnLeftBottom(int line, int column) {
-        cellAt(new Position(line + 1, column - 1))?.isMine()
-    }
-
-    private boolean hasMineOnRightBottom(int line, int column) {
-        cellAt(new Position(line + 1, column + 1))?.isMine()
-    }
-
-    private boolean hasMineOnTop(int line, int column) {
-        cellAt(new Position(line - 1, column))?.isMine()
-    }
-
-    private boolean hasMineOnRightTop(int line, int column) {
-        cellAt(new Position(line - 1, column - 1))?.isMine()
-    }
-
-    private boolean hasMineOnLeftTop(int line, int column) {
-        cellAt(new Position(line - 1, column + 1))?.isMine()
-    }
-
-    boolean hasMineOnRight(int column, int line) {
-        cellAt(new Position(line, column + 1))?.isMine()
-    }
-
-    boolean hasMineOnLeft(int column, int line) {
-        cellAt(new Position(line, column - 1))?.isMine()
+    private List<Position> adjacentPositions(Position position) {
+        [new Position(position.line - 1, position.column),
+         new Position(position.line + 1, position.column),
+         new Position(position.line, position.column + 1),
+         new Position(position.line - 1, position.column + 1),
+         new Position(position.line + 1, position.column + 1),
+         new Position(position.line - 1, position.column - 1),
+         new Position(position.line + 1, position.column - 1),
+         new Position(position.line, position.column - 1)]
     }
 
     private String newLine(int line) {
