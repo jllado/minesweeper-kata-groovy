@@ -22,7 +22,7 @@ class Minesweeper {
     }
 
     private char cell(int line, int column) {
-        def currentCell = cellAt(line, column)
+        def currentCell = cellAt(new Position(line, column))
         if (currentCell.isMine()) {
             return Cell.MINE
         } else {
@@ -30,14 +30,14 @@ class Minesweeper {
         }
     }
 
-    private Cell cellAt(int line, int column) {
-        if (line < 0 || line == numberLines) {
+    private Cell cellAt(Position position) {
+        if (position.line < 0 || position.line == numberLines) {
             return null
         }
-        if (column < 0 || column == numberColumns) {
+        if (position.column < 0 || position.column == numberColumns) {
             return null
         }
-        new Cell(lines[line].charAt(column))
+        new Cell(lines[position.line].charAt(position.column))
     }
 
     private String countAdjacentMines(int line, int column) {
@@ -70,35 +70,35 @@ class Minesweeper {
     }
 
     private boolean hasMineOnBottom(int line, int column) {
-        cellAt(line + 1, column)?.isMine()
+        cellAt(new Position(line + 1, column))?.isMine()
     }
 
     private boolean hasMineOnLeftBottom(int line, int column) {
-        cellAt(line + 1, column - 1)?.isMine()
+        cellAt(new Position(line + 1, column - 1))?.isMine()
     }
 
     private boolean hasMineOnRightBottom(int line, int column) {
-        cellAt(line + 1, column + 1)?.isMine()
+        cellAt(new Position(line + 1, column + 1))?.isMine()
     }
 
     private boolean hasMineOnTop(int line, int column) {
-        cellAt(line - 1, column)?.isMine()
+        cellAt(new Position(line - 1, column))?.isMine()
     }
 
     private boolean hasMineOnRightTop(int line, int column) {
-        cellAt(line - 1, column - 1)?.isMine()
+        cellAt(new Position(line - 1, column - 1))?.isMine()
     }
 
     private boolean hasMineOnLeftTop(int line, int column) {
-        cellAt(line - 1, column + 1)?.isMine()
+        cellAt(new Position(line - 1, column + 1))?.isMine()
     }
 
     boolean hasMineOnRight(int column, int line) {
-        cellAt(line, column + 1)?.isMine()
+        cellAt(new Position(line, column + 1))?.isMine()
     }
 
     boolean hasMineOnLeft(int column, int line) {
-        cellAt(line, column - 1)?.isMine()
+        cellAt(new Position(line, column - 1))?.isMine()
     }
 
     private String newLine(int line) {
