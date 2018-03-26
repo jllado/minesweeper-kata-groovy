@@ -63,6 +63,11 @@ class MinesweeperTest extends Specification {
             generateField(2, 2, ["*.", ".."]) == "*1\n11"
     }
 
+    def "given one empty cell with a mine on left top should return a field with 1 in that cell"() {
+        expect:
+            generateField(2, 2, [".*", ".."]) == "1*\n11"
+    }
+
     String generateField(int numberLines, int numberColumns, List<String> lines) {
         def field = ""
         for (int line = 0; line < numberLines; line++) {
@@ -93,6 +98,9 @@ class MinesweeperTest extends Specification {
             adjacentMines++
         }
         if (hasMineOnTop(line, column, lines)) {
+            adjacentMines++
+        }
+        if (hasMineOnLeftTop(line, column, lines, numberColumns)) {
             adjacentMines++
         }
         if (hasMineOnRightTop(line, column, lines)) {
@@ -143,6 +151,13 @@ class MinesweeperTest extends Specification {
             return false
         }
         lines[line - 1].charAt(column - 1) == "*"
+    }
+
+    private boolean hasMineOnLeftTop(int line, int column, List<String> lines, int numberColumns) {
+        if (line == 0 || column == numberColumns - 1) {
+            return false
+        }
+        lines[line - 1].charAt(column + 1) == "*"
     }
 
     boolean hasMineOnRight(int column, String line, int numberColumns) {
