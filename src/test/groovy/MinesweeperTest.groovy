@@ -19,21 +19,21 @@ class MinesweeperTest extends Specification {
             generateField(2, 1, ["*", "*"]) == "*\n*"
     }
 
-    def "given one empty cell with a mine on his right should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on right should return a field with 1 in that cell"() {
         expect:
             generateField(1, 2, [".*"]) == "1*"
             generateField(1, 3, ["..*"]) == "01*"
             generateField(1, 4, ["..**"]) == "01**"
     }
 
-    def "given one empty cell with a mine on his left should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on left should return a field with 1 in that cell"() {
         expect:
             generateField(1, 2, ["*."]) == "*1"
             generateField(1, 3, ["*.."]) == "*10"
             generateField(1, 4, ["**.."]) == "**10"
     }
 
-    def "given one empty cell with a bomb on his left and his right should return a field with 2 in that cell"() {
+    def "given one empty cell with a bomb on left and right should return a field with 2 in that cell"() {
         expect:
             generateField(1, 3, ["*.*"]) == "*2*"
     }
@@ -60,10 +60,10 @@ class MinesweeperTest extends Specification {
 
     private String countAdjacentMines(int column, String line, int numberColumns) {
         def adjacentMines = 0
-        if (hasMineOnHisLeft(column, line)) {
+        if (hasMineOnLeft(column, line)) {
             adjacentMines++
         }
-        if (hasMineOnHisRight(column, line, numberColumns)) {
+        if (hasMineOnRight(column, line, numberColumns)) {
             adjacentMines++
         }
         adjacentMines.toString()
@@ -73,14 +73,14 @@ class MinesweeperTest extends Specification {
         countAdjacentMines(column, line, numberColumns) > 0
     }
 
-    boolean hasMineOnHisRight(int column, String line, int numberColumns) {
+    boolean hasMineOnRight(int column, String line, int numberColumns) {
         if (column == numberColumns - 1) {
             return false
         }
         line.charAt(column + 1) == "*"
     }
 
-    boolean hasMineOnHisLeft(int column, String line) {
+    boolean hasMineOnLeft(int column, String line) {
         if (column == 0) {
             return false
         }
