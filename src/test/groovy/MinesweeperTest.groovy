@@ -70,7 +70,7 @@ class MinesweeperTest extends Specification {
     }
 
     private boolean hasAdjacentMine(int column, String line, int numberColumns) {
-        hasMineOnHisRight(column, line, numberColumns) || hasMineOnHisLeft(column, line)
+        countAdjacentMines(column, line, numberColumns) > 0
     }
 
     boolean hasMineOnHisRight(int column, String line, int numberColumns) {
