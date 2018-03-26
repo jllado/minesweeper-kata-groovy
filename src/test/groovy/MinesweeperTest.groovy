@@ -21,16 +21,21 @@ class MinesweeperTest extends Specification {
 
     def "given one empty cell with a mine on his right should return a field with 1 in that cell"() {
         expect:
-        generateField(1, 2, [".*"]) == "1*"
-        generateField(1, 3, ["..*"]) == "01*"
-        generateField(1, 4, ["..**"]) == "01**"
+            generateField(1, 2, [".*"]) == "1*"
+            generateField(1, 3, ["..*"]) == "01*"
+            generateField(1, 4, ["..**"]) == "01**"
     }
 
     def "given one empty cell with a mine on his left should return a field with 1 in that cell"() {
         expect:
-        generateField(1, 2, ["*."]) == "*1"
-        generateField(1, 3, ["*.."]) == "*10"
-        generateField(1, 4, ["**.."]) == "**10"
+            generateField(1, 2, ["*."]) == "*1"
+            generateField(1, 3, ["*.."]) == "*10"
+            generateField(1, 4, ["**.."]) == "**10"
+    }
+
+    def "given one empty cell with a bomb on his left and his right should return a field with 2 in that cell"() {
+        expect:
+            generateField(1, 3, ["*.*"]) == "*2*"
     }
 
     String generateField(int numberLines, int numberColumns, List<String> lines) {
@@ -48,18 +53,24 @@ class MinesweeperTest extends Specification {
         def currentLine = lines[line]
         def currentCell = currentLine.charAt(column)
         if (isEmpty(currentCell) && hasAdjacentMine(column, currentLine, numberColumns)) {
-            return countAdjacentMines()
+            return countAdjacentMines(column, currentLine, numberColumns)
         }
         currentCell == "*" ? "*" : '0'
     }
 
-    private String countAdjacentMines() {
-        def adjacentMines = 1
+    private String countAdjacentMines(int column, String line, int numberColumns) {
+        def adjacentMines = 0
+        if (hasMineOnHisLeft(column, line)) {
+            adjacentMines++
+        }
+        if (hasMineOnHisRight(column, line, numberColumns)) {
+            adjacentMines++
+        }
         adjacentMines.toString()
     }
 
-    private boolean hasAdjacentMine(int column, String currentLine, int numberColumns) {
-        hasMineOnHisRight(column, currentLine, numberColumns) || hasMineOnHisLeft(column, currentLine)
+    private boolean hasAdjacentMine(int column, String line, int numberColumns) {
+        hasMineOnHisRight(column, line, numberColumns) || hasMineOnHisLeft(column, line)
     }
 
     boolean hasMineOnHisRight(int column, String line, int numberColumns) {
