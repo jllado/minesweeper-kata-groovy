@@ -19,19 +19,42 @@ class MinesweeperTest extends Specification {
             generateField(2, 1, ["*", "*"]) == "*\n*"
     }
 
+    def "given one empty cell with a bomb on his right should return a field with 1 in that cell"() {
+        expect:
+        generateField(1, 2, [".*"]) == "1*"
+        generateField(1, 3, ["..*"]) == "01*"
+        generateField(1, 4, ["..**"]) == "01**"
+    }
+
     String generateField(int numberLines, int numberColumns, List<String> lines) {
         def field = ""
         for (int line = 0; line < numberLines; line++) {
             field += newLine(line)
             for (int column = 0; column < numberColumns; column++) {
-                field += cell(lines, line, column)
+                field += cell(lines, line, column, numberColumns)
             }
         }
         field
     }
 
-    private char cell(List<String> lines, int line, int column) {
-        lines[line].charAt(column) == "*" ? "*" : '0'
+    private char cell(List<String> lines, int line, int column, int numberColumns) {
+        def currentLine = lines[line]
+        def currentCell = currentLine.charAt(column)
+        if (isEmpty(currentCell) && hasBombOnHisRight(column, currentLine, numberColumns)) {
+            return "1"
+        }
+        currentCell == "*" ? "*" : '0'
+    }
+
+    boolean hasBombOnHisRight(int column, String line, int numberColumns) {
+        if (column == numberColumns - 1) {
+            return false
+        }
+        line.charAt(column + 1) == "*"
+    }
+
+    private boolean isEmpty(char cell) {
+        cell == "."
     }
 
     private String newLine(int line) {
