@@ -2,7 +2,7 @@ import spock.lang.Specification
 
 class MinesweeperTest extends Specification {
 
-    def "given zero bombs should return an empty field"() {
+    def "given zero mines should return an empty field"() {
         expect:
             generateField(0, 0, []) == ""
             generateField(1, 1, ["."]) == "0"
@@ -12,21 +12,21 @@ class MinesweeperTest extends Specification {
             generateField(3, 1, [".", ".", "."]) == "0\n0\n0"
     }
 
-    def "given all bombs should return a field full of bombs"() {
+    def "given all mines should return a field full of mines"() {
         expect:
             generateField(1, 1, ["*"]) == "*"
             generateField(1, 2, ["**"]) == "**"
             generateField(2, 1, ["*", "*"]) == "*\n*"
     }
 
-    def "given one empty cell with a bomb on his right should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on his right should return a field with 1 in that cell"() {
         expect:
         generateField(1, 2, [".*"]) == "1*"
         generateField(1, 3, ["..*"]) == "01*"
         generateField(1, 4, ["..**"]) == "01**"
     }
 
-    def "given one empty cell with a bomb on his left should return a field with 1 in that cell"() {
+    def "given one empty cell with a mine on his left should return a field with 1 in that cell"() {
         expect:
         generateField(1, 2, ["*."]) == "*1"
         generateField(1, 3, ["*.."]) == "*10"
@@ -47,24 +47,24 @@ class MinesweeperTest extends Specification {
     private char cell(List<String> lines, int line, int column, int numberColumns) {
         def currentLine = lines[line]
         def currentCell = currentLine.charAt(column)
-        if (isEmpty(currentCell) && touchBomb(column, currentLine, numberColumns)) {
+        if (isEmpty(currentCell) && hasAdjacentMine(column, currentLine, numberColumns)) {
             return "1"
         }
         currentCell == "*" ? "*" : '0'
     }
 
-    private boolean touchBomb(int column, String currentLine, int numberColumns) {
-        hasBombOnHisRight(column, currentLine, numberColumns) || hasBombOnHisLeft(column, currentLine)
+    private boolean hasAdjacentMine(int column, String currentLine, int numberColumns) {
+        hasMineOnHisRight(column, currentLine, numberColumns) || hasMineOnHisLeft(column, currentLine)
     }
 
-    boolean hasBombOnHisRight(int column, String line, int numberColumns) {
+    boolean hasMineOnHisRight(int column, String line, int numberColumns) {
         if (column == numberColumns - 1) {
             return false
         }
         line.charAt(column + 1) == "*"
     }
 
-    boolean hasBombOnHisLeft(int column, String line) {
+    boolean hasMineOnHisLeft(int column, String line) {
         if (column == 0) {
             return false
         }
