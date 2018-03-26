@@ -1,5 +1,7 @@
 class Minesweeper {
 
+    public static final String MINE = "*"
+
     private int numberLines
     private int numberColumns
     private List<String> lines
@@ -23,8 +25,8 @@ class Minesweeper {
 
     private char cell(List<String> lines, int line, int column, int numberColumns, int numberLines) {
         def currentCell = lines[line].charAt(column)
-        if (!isEmpty(currentCell)) {
-            return "*"
+        if (isMine(currentCell)) {
+            return MINE
         } else {
             return countAdjacentMines(lines, line, column, numberColumns, numberLines)
         }
@@ -64,60 +66,68 @@ class Minesweeper {
         if (line == numberLines - 1) {
             return false
         }
-        lines[line + 1].charAt(column) == "*"
+        def bottom = lines[line + 1].charAt(column)
+        isMine(bottom)
+    }
+
+    private boolean isMine(char cell) {
+        cell == MINE
     }
 
     private boolean hasMineOnLeftBottom(int line, int column, List<String> lines, int numberLines) {
         if (line == numberLines - 1 || column == 0) {
             return false
         }
-        lines[line + 1].charAt(column - 1) == "*"
+        def leftBottom = lines[line + 1].charAt(column - 1)
+        isMine(leftBottom)
     }
 
     private boolean hasMineOnRightBottom(int line, int column, List<String> lines, int numberColumns, int numberLines) {
         if (line == numberLines - 1 || column == numberColumns - 1) {
             return false
         }
-        lines[line + 1].charAt(column + 1) == "*"
+        def rightBottom = lines[line + 1].charAt(column + 1)
+        isMine(rightBottom)
     }
 
     private boolean hasMineOnTop(int line, int column, List<String> lines) {
         if (line == 0) {
             return false
         }
-        lines[line - 1].charAt(column) == "*"
+        def top = lines[line - 1].charAt(column)
+        isMine(top)
     }
 
     private boolean hasMineOnRightTop(int line, int column, List<String> lines) {
         if (line == 0 || column == 0) {
             return false
         }
-        lines[line - 1].charAt(column - 1) == "*"
+        def rightTop = lines[line - 1].charAt(column - 1)
+        isMine(rightTop)
     }
 
     private boolean hasMineOnLeftTop(int line, int column, List<String> lines, int numberColumns) {
         if (line == 0 || column == numberColumns - 1) {
             return false
         }
-        lines[line - 1].charAt(column + 1) == "*"
+        def leftTop = lines[line - 1].charAt(column + 1)
+        isMine(leftTop)
     }
 
     boolean hasMineOnRight(int column, String line, int numberColumns) {
         if (column == numberColumns - 1) {
             return false
         }
-        line.charAt(column + 1) == "*"
+        def right = line.charAt(column + 1)
+        isMine(right)
     }
 
     boolean hasMineOnLeft(int column, String line) {
         if (column == 0) {
             return false
         }
-        line.charAt(column - 1) == "*"
-    }
-
-    private boolean isEmpty(char cell) {
-        cell == "."
+        def left = line.charAt(column - 1)
+        isMine(left)
     }
 
     private String newLine(int line) {
