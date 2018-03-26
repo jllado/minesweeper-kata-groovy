@@ -31,6 +31,12 @@ class Minesweeper {
     }
 
     private Cell cellAt(int line, int column) {
+        if (line < 0 || line == numberLines) {
+            return null
+        }
+        if (column < 0 || column == numberColumns) {
+            return null
+        }
         new Cell(lines[line].charAt(column))
     }
 
@@ -64,66 +70,35 @@ class Minesweeper {
     }
 
     private boolean hasMineOnBottom(int line, int column) {
-        if (line == numberLines - 1) {
-            return false
-        }
-        def bottom = cellAt(line + 1, column)
-        bottom.isMine()
+        cellAt(line + 1, column)?.isMine()
     }
 
     private boolean hasMineOnLeftBottom(int line, int column) {
-        if (line == numberLines - 1 || column == 0) {
-            return false
-        }
-        def leftBottom = cellAt(line + 1, column - 1)
-        leftBottom.isMine()
+        cellAt(line + 1, column - 1)?.isMine()
     }
 
     private boolean hasMineOnRightBottom(int line, int column) {
-        if (line == numberLines - 1 || column == numberColumns - 1) {
-            return false
-        }
-        def rightBottom = cellAt(line + 1, column + 1)
-        rightBottom.isMine()
+        cellAt(line + 1, column + 1)?.isMine()
     }
 
     private boolean hasMineOnTop(int line, int column) {
-        if (line == 0) {
-            return false
-        }
-        def top = cellAt(line - 1, column)
-        top.isMine()
+        cellAt(line - 1, column)?.isMine()
     }
 
     private boolean hasMineOnRightTop(int line, int column) {
-        if (line == 0 || column == 0) {
-            return false
-        }
-        def rightTop = cellAt(line - 1, column - 1)
-        rightTop.isMine()
+        cellAt(line - 1, column - 1)?.isMine()
     }
 
     private boolean hasMineOnLeftTop(int line, int column) {
-        if (line == 0 || column == numberColumns - 1) {
-            return false
-        }
-        def leftTop = cellAt(line - 1, column + 1)
-        leftTop.isMine()
+        cellAt(line - 1, column + 1)?.isMine()
     }
 
     boolean hasMineOnRight(int column, int line) {
-        if (column == numberColumns - 1) {
-            return false
-        }
-        def right = cellAt(line, column + 1)
-        right.isMine()
+        cellAt(line, column + 1)?.isMine()
     }
 
     boolean hasMineOnLeft(int column, int line) {
-        if (column == 0) {
-            return false
-        }
-        cellAt(line, column - 1).isMine()
+        cellAt(line, column - 1)?.isMine()
     }
 
     private String newLine(int line) {
