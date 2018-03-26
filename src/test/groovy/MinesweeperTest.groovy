@@ -50,27 +50,27 @@ class MinesweeperTest extends Specification {
     }
 
     private char cell(List<String> lines, int line, int column, int numberColumns) {
-        def currentLine = lines[line]
-        def currentCell = currentLine.charAt(column)
-        if (isEmpty(currentCell) && hasAdjacentMine(column, currentLine, numberColumns)) {
-            return countAdjacentMines(column, currentLine, numberColumns)
+        def currentCell = lines[line].charAt(column)
+        if (isEmpty(currentCell) && hasAdjacentMine(lines, line, column, numberColumns)) {
+            return countAdjacentMines(lines, line, column, numberColumns)
         }
         currentCell == "*" ? "*" : '0'
     }
 
-    private String countAdjacentMines(int column, String line, int numberColumns) {
+    private String countAdjacentMines(List<String> lines, int line, int column, int numberColumns) {
+        def currentLine = lines[line]
         def adjacentMines = 0
-        if (hasMineOnLeft(column, line)) {
+        if (hasMineOnLeft(column, currentLine)) {
             adjacentMines++
         }
-        if (hasMineOnRight(column, line, numberColumns)) {
+        if (hasMineOnRight(column, currentLine, numberColumns)) {
             adjacentMines++
         }
         adjacentMines.toString()
     }
 
-    private boolean hasAdjacentMine(int column, String line, int numberColumns) {
-        countAdjacentMines(column, line, numberColumns) > 0
+    private boolean hasAdjacentMine(List<String> lines, int line, int column, int numberColumns) {
+        countAdjacentMines(lines, line, column, numberColumns) > 0
     }
 
     boolean hasMineOnRight(int column, String line, int numberColumns) {
