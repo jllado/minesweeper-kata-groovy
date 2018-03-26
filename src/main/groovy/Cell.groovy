@@ -8,7 +8,7 @@ class Cell {
         this.value = value
     }
 
-    private boolean isMine() {
+    boolean isMine() {
         value == MINE
     }
 
