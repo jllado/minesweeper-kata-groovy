@@ -43,28 +43,32 @@ class MinesweeperTest extends Specification {
             generateField(2, 1, ["*", "."]) == "*\n1"
     }
 
+    def "given one empty cell with a bomb on bottom should return a field with 1 in that cell"() {
+        expect:
+            generateField(2, 1, [".", "*"]) == "1\n*"
+    }
 
     String generateField(int numberLines, int numberColumns, List<String> lines) {
         def field = ""
         for (int line = 0; line < numberLines; line++) {
             field += newLine(line)
             for (int column = 0; column < numberColumns; column++) {
-                field += cell(lines, line, column, numberColumns)
+                field += cell(lines, line, column, numberColumns, numberLines)
             }
         }
         field
     }
 
-    private char cell(List<String> lines, int line, int column, int numberColumns) {
+    private char cell(List<String> lines, int line, int column, int numberColumns, int numberLines) {
         def currentCell = lines[line].charAt(column)
         if (!isEmpty(currentCell)) {
             return "*"
         } else {
-            return countAdjacentMines(lines, line, column, numberColumns)
+            return countAdjacentMines(lines, line, column, numberColumns, numberLines)
         }
     }
 
-    private String countAdjacentMines(List<String> lines, int line, int column, int numberColumns) {
+    private String countAdjacentMines(List<String> lines, int line, int column, int numberColumns, int numberLines) {
         def currentLine = lines[line]
         def adjacentMines = 0
         if (hasMineOnLeft(column, currentLine)) {
@@ -76,7 +80,17 @@ class MinesweeperTest extends Specification {
         if (hasMineOnTop(line, column, lines)) {
             adjacentMines++
         }
+        if (hasMineOnBottom(line, column, lines, numberLines)) {
+            adjacentMines++
+        }
         adjacentMines.toString()
+    }
+
+    private boolean hasMineOnBottom(int line, int column, List<String> lines, int numberLines) {
+        if (line == numberLines - 1) {
+            return false
+        }
+        lines[line + 1].charAt(column) == "*"
     }
 
     private boolean hasMineOnTop(int line, int column, List<String> lines) {
