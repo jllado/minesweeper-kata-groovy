@@ -1,6 +1,16 @@
 class Minesweeper {
 
-    String generateField(int numberLines, int numberColumns, List<String> lines) {
+    private int numberLines
+    private int numberColumns
+    private List<String> lines
+
+    Minesweeper(int numberLines, int numberColumns, List<String> lines) {
+        this.lines = lines
+        this.numberColumns = numberColumns
+        this.numberLines = numberLines
+    }
+
+    String generateField() {
         def field = ""
         for (int line = 0; line < numberLines; line++) {
             field += newLine(line)

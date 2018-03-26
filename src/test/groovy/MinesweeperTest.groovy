@@ -74,7 +74,7 @@ class MinesweeperTest extends Specification {
     }
 
     String generateField(int numberLines, int numberColumns, List<String> lines) {
-        new Minesweeper().generateField(numberLines, numberColumns, lines)
+        new Minesweeper(numberLines, numberColumns, lines).generateField()
     }
 
 }
