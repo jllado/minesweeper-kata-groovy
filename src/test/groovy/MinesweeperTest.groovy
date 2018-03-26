@@ -47,11 +47,14 @@ class MinesweeperTest extends Specification {
     private char cell(List<String> lines, int line, int column, int numberColumns) {
         def currentLine = lines[line]
         def currentCell = currentLine.charAt(column)
-        if (isEmpty(currentCell)
-                && (hasBombOnHisRight(column, currentLine, numberColumns) || hasBombOnHisLeft(column, currentLine))) {
+        if (isEmpty(currentCell) && touchBomb(column, currentLine, numberColumns)) {
             return "1"
         }
         currentCell == "*" ? "*" : '0'
+    }
+
+    private boolean touchBomb(int column, String currentLine, int numberColumns) {
+        hasBombOnHisRight(column, currentLine, numberColumns) || hasBombOnHisLeft(column, currentLine)
     }
 
     boolean hasBombOnHisRight(int column, String line, int numberColumns) {
