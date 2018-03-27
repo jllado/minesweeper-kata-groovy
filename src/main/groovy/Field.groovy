@@ -18,26 +18,6 @@ class Field {
         return numberColumns
     }
 
-    String toString() {
-        def field = ""
-        for (int line = 0; line < numberLines; line++) {
-            field += newLine(line)
-            for (int column = 0; column < numberColumns; column++) {
-                field += cell(line, column)
-            }
-        }
-        field
-    }
-
-    private char cell(int line, int column) {
-        def currentCell = cellAt(new Position(line, column))
-        if (currentCell.isMine()) {
-            return Cell.MINE
-        } else {
-            return countAdjacentMines(new Position(line, column))
-        }
-    }
-
     Cell cellAt(Position position) {
         if (!isValid(position)) {
             return null
