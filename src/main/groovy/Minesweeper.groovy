@@ -1,65 +1,32 @@
 class Minesweeper {
 
-    private int numberLines
-    private int numberColumns
-    private List<String> lines
+    private Field field
 
     Minesweeper(int numberLines, int numberColumns, List<String> lines) {
-        this.lines = lines
-        this.numberColumns = numberColumns
-        this.numberLines = numberLines
+        this.field = new Field(numberLines, numberColumns, lines)
     }
 
     String generateField() {
-        def field = ""
-        for (int line = 0; line < numberLines; line++) {
-            field += newLine(line)
-            for (int column = 0; column < numberColumns; column++) {
-                field += cell(line, column)
+        toString()
+    }
+
+    String toString() {
+        def stringField = ""
+        for (int line = 0; line < field.numberLines; line++) {
+            stringField += newLine(line)
+            for (int column = 0; column < field.numberColumns; column++) {
+                stringField += cell(new Position(line, column))
             }
         }
-        field
+        stringField
     }
 
-    private char cell(int line, int column) {
-        def currentCell = cellAt(new Position(line, column))
-        if (currentCell.isMine()) {
+    private char cell(Position position) {
+        if (field.cellAt(position).isMine()) {
             return Cell.MINE
         } else {
-            return countAdjacentMines(line, column)
+            return field.countAdjacentMines(position).toString()
         }
-    }
-
-    private Cell cellAt(Position position) {
-        if (!isValid(position)) {
-            return null
-        }
-        new Cell(lines[position.line].charAt(position.column))
-    }
-
-    private boolean isValid(Position position) {
-        if (position.line < 0 || position.line == numberLines) {
-            return false
-        }
-        if (position.column < 0 || position.column == numberColumns) {
-            return false
-        }
-        true
-    }
-
-    private String countAdjacentMines(int line, int column) {
-        adjacentPositions(new Position(line, column)).collect {cellAt(it)}.findAll {it?.isMine()}.size().toString()
-    }
-
-    private List<Position> adjacentPositions(Position position) {
-        [new Position(position.line - 1, position.column),
-         new Position(position.line + 1, position.column),
-         new Position(position.line, position.column + 1),
-         new Position(position.line - 1, position.column + 1),
-         new Position(position.line + 1, position.column + 1),
-         new Position(position.line - 1, position.column - 1),
-         new Position(position.line + 1, position.column - 1),
-         new Position(position.line, position.column - 1)]
     }
 
     private String newLine(int line) {
