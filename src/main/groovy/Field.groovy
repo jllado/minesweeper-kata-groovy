@@ -35,7 +35,7 @@ class Field {
         true
     }
 
-    private int countAdjacentMines(Position position) {
+    int countAdjacentMines(Position position) {
         adjacentPositions(position).findAll {cellAt(it)?.isMine()}.size()
     }
 
