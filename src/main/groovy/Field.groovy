@@ -26,13 +26,15 @@ class Field {
     }
 
     private boolean isValid(Position position) {
-        if (position.line < 0 || position.line == numberLines) {
-            return false
-        }
-        if (position.column < 0 || position.column == numberColumns) {
-            return false
-        }
-        true
+        isValidLine(position) && isValidColumn(position)
+    }
+
+    private boolean isValidColumn(Position position) {
+        position.column >= 0 && position.column != numberColumns
+    }
+
+    private boolean isValidLine(Position position) {
+        position.line >= 0 && position.line != numberLines
     }
 
     int countAdjacentMines(Position position) {
