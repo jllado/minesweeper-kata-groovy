@@ -15,13 +15,13 @@ class Minesweeper {
         for (int line = 0; line < field.numberLines; line++) {
             stringField += newLine(line)
             for (int column = 0; column < field.numberColumns; column++) {
-                stringField += cell(new Position(line, column))
+                stringField += cellValueFor(new Position(line, column))
             }
         }
         stringField
     }
 
-    private char cell(Position position) {
+    private char cellValueFor(Position position) {
         if (field.cellAt(position).isMine()) {
             return Cell.MINE
         } else {
