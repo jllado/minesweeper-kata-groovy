@@ -7,10 +7,6 @@ class Minesweeper {
     }
 
     String generateField() {
-        toString()
-    }
-
-    String toString() {
         def stringField = ""
         for (int line = 0; line < field.numberLines; line++) {
             stringField += newLine(line)
@@ -20,6 +16,7 @@ class Minesweeper {
         }
         stringField
     }
+
 
     private char cellValueFor(Position position) {
         if (field.cellAt(position).isMine()) {
